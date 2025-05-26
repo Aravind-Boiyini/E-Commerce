@@ -22,7 +22,7 @@ const AdminDashboard = () => {
           <button className="px-4 py-2 bg-indigo-100 text-indigo-600 rounded-lg text-sm">All Time</button>
           <button className="px-4 py-2 bg-white border text-gray-600 rounded-lg text-sm">24 Hour</button>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm">
+        <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm" onClick={() => navigate("/AddProduct")}>
           <FiPlus className="text-lg" /> Add Product
         </button>
       </div>
