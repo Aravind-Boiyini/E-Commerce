@@ -1,9 +1,11 @@
 import React from "react";
 import { FiFilter, FiPlus } from "react-icons/fi";
 import { FaWallet } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const data = Array(6).fill({
     category: "pattu sarees",
     title: "Banarasi pattu Saree",
@@ -53,7 +55,7 @@ const AdminDashboard = () => {
             <button className="flex items-center gap-1 px-3 py-1 border rounded text-sm text-gray-600">
               <FiFilter /> Filters
             </button>
-            <button className="text-sm text-indigo-600 font-medium">See More</button>
+            <button className="text-sm text-indigo-600 font-medium" onClick={() => navigate("/Inventory")}>See More</button>
           </div>
         </div>
         <div className="overflow-x-auto">
