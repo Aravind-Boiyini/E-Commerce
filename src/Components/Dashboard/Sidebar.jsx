@@ -62,6 +62,14 @@ export default function Sidebar() {
               )}
             </div>
 
+              <SidebarItem icon={<FiTruck />} label="Delivery Management" to="/DeliveryManagement" />
+              <SidebarItem icon={<FiShoppingCart />} label="Orders" to="/OrderManagement" />
+              <SidebarItem icon={<FiUsers />} label="Customers" to="/side-bar/customers" />
+              <SidebarItem icon={<FiDollarSign />} label="Finance" to="/side-bar/finance" />
+              <SidebarItem icon={<FiSettings />} label="Setting" to="/side-bar/settings" />
+            </nav>
+          </div>
+
             <SidebarItem icon={<FiTruck />} label="Delivery Management" to="/side-bar/delivery" isActive={isActive} />
             <SidebarItem icon={<FiShoppingCart />} label="Orders" to="/side-bar/orders" isActive={isActive} />
             <SidebarItem icon={<FiUsers />} label="Customers" to="/Customerslist" isActive={isActive} />
@@ -70,6 +78,7 @@ export default function Sidebar() {
             <SidebarItem icon={<FiSettings />} label="Setting" to="/side-bar/settings" isActive={isActive} />
           </nav>
         </div>
+
 
         <div className="px-6 text-sm text-gray-500">
           <div className="flex items-center gap-2 mb-1">

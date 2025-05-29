@@ -9,6 +9,7 @@ import AdminDashboard from "./Components/Dashboard/AdminDashboard";
 import ProfileSetting from "./Components/Profile/ProfileSettings";
 import Category from "./Components/Product Management/Category";
 import Sidebar from "./Components/Dashboard/Sidebar";
+import DeliveryManagement from "./Components/DeliveryManagement/DeliveryManagement";
 import ProductList from "./Components/Product Management/ProductList";
 import AddProduct from "./Components/Product Management/AddProduct";
 import Finance from "./Components/Finance/Finance";
@@ -56,6 +57,9 @@ function AppContent({ products, setProducts }) {
           <Route path="/Admindashboard" element={<AdminDashboard />} />
           <Route path="/profile-Setting" element={<ProfileSetting />} />
           <Route path="/Category" element={<Category />} />
+          <Route path="/DeliveryManagement" element={<DeliveryManagement />} />
+          <Route path="/OrderManagement" element={<DeliveryManagement />} />
+
           <Route path="/Productlist"
             element={<ProductList products={products} />}
           />
