@@ -1,9 +1,11 @@
 import React from "react";
 import { FiFilter, FiPlus } from "react-icons/fi";
 import { FaWallet } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const data = Array(6).fill({
     category: "pattu sarees",
     title: "Banarasi pattu Saree",
@@ -20,7 +22,7 @@ const AdminDashboard = () => {
           <button className="px-4 py-2 bg-indigo-100 text-indigo-600 rounded-lg text-sm">All Time</button>
           <button className="px-4 py-2 bg-white border text-gray-600 rounded-lg text-sm">24 Hour</button>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm">
+        <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm" onClick={() => navigate("/AddProduct")}>
           <FiPlus className="text-lg" /> Add Product
         </button>
       </div>
@@ -53,7 +55,7 @@ const AdminDashboard = () => {
             <button className="flex items-center gap-1 px-3 py-1 border rounded text-sm text-gray-600">
               <FiFilter /> Filters
             </button>
-            <button className="text-sm text-indigo-600 font-medium">See More</button>
+            <button className="text-sm text-indigo-600 font-medium" onClick={() => navigate("/Inventory")}>See More</button>
           </div>
         </div>
         <div className="overflow-x-auto">
