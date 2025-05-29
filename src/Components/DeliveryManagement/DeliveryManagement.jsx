@@ -1,30 +1,43 @@
-import React from 'react';
+import { useState } from 'react';
 import { FaCalendarAlt, FaChevronRight, FaPlus } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 
-const orders = Array(8).fill({
-  orderId: "#302012",
-  productTitle: "Pattu Saree",
-  productImage: "/src/assets/login.png",
-  orderDate: "02/05/2025",
-  customerId: "#302012",
-  customerName: "Naveen",
-  shippingAddress: {
-    name: "John Bushmill",
-    email: "Johnb@mail.com"
-  },
-  quantity: 2,
-  value: "₹ 1200.00",
-  paymentMode: "Mastercard",
-  deliveryId: "-",
-});
+function DeliveryManagement() {
+  // Start with empty data, no API or dummy data
+  const [showModal, setShowModal] = useState(false);
+  const [deliveryIdInput, setDeliveryIdInput] = useState('');
+  const [selectedOrderIdx, setSelectedOrderIdx] = useState(null);
+  const [orderData, setOrderData] = useState([]);
 
- function DeliveryManagement() {
+  const location = useLocation();
+
+  // const orderMode = location.pathname.includes('OrderManagement');
+  const deliveryMode = location.pathname.includes('DeliveryManagement');
+  
+
+  const handleAccept = (idx) => {
+    setSelectedOrderIdx(idx);
+    setShowModal(true);
+  };
+
+  const handleConfirm = () => {
+    if (selectedOrderIdx !== null) {
+      const updatedOrders = [...orderData];
+      updatedOrders[selectedOrderIdx].deliveryId = deliveryIdInput;
+      setOrderData(updatedOrders);
+      setShowModal(false);
+      setDeliveryIdInput('');
+      setSelectedOrderIdx(null);
+    }
+  };
+
   return (
     <div className="p-6">
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 mb-2 flex items-center gap-2">
         <span className="hover:underline cursor-pointer">Dashboard</span>
         <FaChevronRight size={12} />
+        
         <span className="font-medium text-gray-700">Delivery Management</span>
       </div>
 
@@ -53,41 +66,88 @@ const orders = Array(8).fill({
               {[
                 "Order ID", "Product Title", "Order Date", "Customer ID", "Customer Name",
                 "Shipping Address", "Order Quantity", "Order Value", "Mode of Payment",
-                "Delivery ID", "Action"
+                "Delivery ID",  deliveryMode ? "Action" : "Status"
               ].map(header => (
                 <th key={header} className="px-4 py-2 whitespace-nowrap">{header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, idx) => (
-              <tr key={idx} className="border-t hover:bg-gray-50">
-                <td className="px-4 py-2 text-blue-600 cursor-pointer">{order.orderId}</td>
-                <td className="px-4 py-2 flex items-center gap-2">
-                  <img src={order.productImage} alt="" className="w-8 h-8 rounded" />
-                  {order.productTitle}
-                </td>
-                <td className="px-4 py-2">{order.orderDate}</td>
-                <td className="px-4 py-2 text-blue-600 cursor-pointer">{order.customerId}</td>
-                <td className="px-4 py-2">{order.customerName}</td>
-                <td className="px-4 py-2">
-                  <div>{order.shippingAddress.name}</div>
-                  <div className="text-gray-500 text-xs">{order.shippingAddress.email}</div>
-                </td>
-                <td className="px-4 py-2">{order.quantity}</td>
-                <td className="px-4 py-2">{order.value}</td>
-                <td className="px-4 py-2">{order.paymentMode}</td>
-                <td className="px-4 py-2">{order.deliveryId}</td>
-                
-                <td className="px-4 py-2 flex gap-1">
-                  <button className="text-green-600 bg-green-100 px-3 py-1 rounded text-xs">Accept</button>
-                  <button className="text-red-600 bg-red-100 px-3 py-1 rounded text-xs">Cancel</button>
+            {orderData.length === 0 ? (
+              <tr>
+                <td colSpan={11} className="text-center py-8 text-gray-400">
+                  No orders to display.
                 </td>
               </tr>
-            ))}
+            ) : (
+              orderData.map((order, idx) => (
+                <tr key={idx} className="border-t hover:bg-gray-50">
+                  <td className="px-4 py-2 text-blue-600 cursor-pointer">{order.orderId}</td>
+                  <td className="px-4 py-2 flex items-center gap-2">
+                    <img src={order.productImage} alt="" className="w-8 h-8 rounded" />
+                    {order.productTitle}
+                  </td>
+                  <td className="px-4 py-2">{order.orderDate}</td>
+                  <td className="px-4 py-2 text-blue-600 cursor-pointer">{order.customerId}</td>
+                  <td className="px-4 py-2">{order.customerName}</td>
+                  <td className="px-4 py-2">
+                    <div>{order.shippingAddress?.name}</div>
+                    <div className="text-gray-500 text-xs">{order.shippingAddress?.email}</div>
+                  </td>
+                  <td className="px-4 py-2">{order.quantity}</td>
+                  <td className="px-4 py-2">{order.value}</td>
+                  <td className="px-4 py-2">{order.paymentMode}</td>
+                  <td className="px-4 py-2">{order.deliveryId}</td>
+                  <td className="px-4 py-2 flex gap-1">
+                    {deliveryMode ?  (<><button
+                      onClick={() => handleAccept(idx)}
+                      className="text-green-600 bg-green-100 px-3 py-1 rounded text-xs"
+                    >
+                      Accept
+                    </button>
+                    <button className="text-red-600 bg-red-100 px-3 py-1 rounded text-xs">Cancel</button>
+                    </>) : (
+                      <span className="text-yellow-600 bg-yellow-100 px-3 py-1 rounded text-xs">
+                        {order.status}
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-80">
+            <h2 className="text-lg font-semibold mb-4">Enter Delivery ID</h2>
+            <input
+              type="text"
+              className="w-full border rounded px-3 py-2 mb-4"
+              placeholder="Delivery ID"
+              value={deliveryIdInput}
+              onChange={(e) => setDeliveryIdInput(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirm}
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Pagination */}
       <div className="flex justify-end mt-4 gap-1">
@@ -106,4 +166,5 @@ const orders = Array(8).fill({
     </div>
   );
 }
+
 export default DeliveryManagement;

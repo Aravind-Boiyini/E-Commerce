@@ -58,7 +58,7 @@ export default function Sidebar() {
               </div>
 
               <SidebarItem icon={<FiTruck />} label="Delivery Management" to="/DeliveryManagement" />
-              <SidebarItem icon={<FiShoppingCart />} label="Orders" to="/side-bar/orders" />
+              <SidebarItem icon={<FiShoppingCart />} label="Orders" to="/OrderManagement" />
               <SidebarItem icon={<FiUsers />} label="Customers" to="/side-bar/customers" />
               <SidebarItem icon={<FiDollarSign />} label="Finance" to="/side-bar/finance" />
               <SidebarItem icon={<FiSettings />} label="Setting" to="/side-bar/settings" />

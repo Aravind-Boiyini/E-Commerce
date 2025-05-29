@@ -43,6 +43,8 @@ function AppContent() {
           <Route path="/profile-Setting" element={<ProfileSetting />} />
           <Route path="/Category" element={<Category />} />
           <Route path="/DeliveryManagement" element={<DeliveryManagement />} />
+          <Route path="/OrderManagement" element={<DeliveryManagement />} />
+
         </Routes>
       </div>
     </>
